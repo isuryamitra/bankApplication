@@ -1,14 +1,13 @@
-package com.ibm.sf.dao;
+package com.ibm.sf.service;
 
 import java.time.LocalDate;
 
-public interface CustomerDAO {
+public interface CustomerService {
 
 	// login method
 	public abstract Integer login(String uid,String password);
-
 	
-	//current available amount
+
 	public abstract Double getCurrentAmount(String uid);
 	//get customer statement
 	public abstract String getStatement(String uid);
