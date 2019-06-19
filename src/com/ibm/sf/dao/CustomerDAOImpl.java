@@ -1,8 +1,9 @@
+
 package com.ibm.sf.dao;
 
 import java.time.LocalDate;
 
-public class CustomerDAOImpl implements CustomerDAO {
+public class CustomerDAOImpl implements CustomerDAO{
 
 	@Override
 	public Integer login(String uid, String password) {
@@ -58,6 +59,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 }
+
