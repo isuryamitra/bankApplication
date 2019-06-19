@@ -21,7 +21,7 @@ public interface CustomerDAO {
 	public abstract Integer customerReg(String name,Long accountno,String email,LocalDate dob,String fname,Long mobile,String password);
 	//customer details
 	public abstract Integer getCustomerDetails();
-	public abstract Double withdraw(Long accountno,Double amount);
-	public abstract Double deposit(Long accountno,Double amount);
+	public abstract Double withdraw(String uid,Double amount);
+	public abstract Double deposit(String uid,Double amount);
 	
 }
