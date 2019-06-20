@@ -22,6 +22,7 @@ public class LoginServlet extends HttpServlet {
 		try {					
 			String uid=request.getParameter("uid");
 			String password=request.getParameter("password");
+			System.out.println(uid +" , "+password);
 			int regid=service.login(uid, password);
 			if(regid!=0) {
 				/*out.println("<html><body><h1><font color='red'>");
@@ -30,13 +31,14 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session=request.getSession();
 				session.setAttribute("uid", uid);
 				if(service.checkType(uid)==0) {
-				request.getRequestDispatcher("views/index.jsp")
+				request.getRequestDispatcher("index.jsp")
 				.forward(request,response);
 			}
 				else{
-					request.getRequestDispatcher("views/indexAdmin.jsp")
+					request.getRequestDispatcher("indexAdmin.jsp")
 					.forward(request,response);
 				}
+				System.out.println(regid);
 			}
 					
 					else {
@@ -46,8 +48,9 @@ public class LoginServlet extends HttpServlet {
 				out.println("</font></h1></body></html>");
 				request.getRequestDispatcher("login.html").include(request, response);
 			}
-			
+			System.out.println("hi");
 		}catch(Exception e) {
+			System.out.println(e);
 			response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE,e.getMessage());
 		}
 	}

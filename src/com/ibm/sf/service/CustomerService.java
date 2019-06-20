@@ -26,6 +26,6 @@ public interface CustomerService {
 	public abstract Double deposit(String uid,Double amount)throws BankException;
 
 
-	public abstract int checkType(String uid);
+	public abstract int checkType(String uid) throws BankException;
 	
 }
