@@ -22,16 +22,24 @@ public class LoginServlet extends HttpServlet {
 		try {					
 			String uid=request.getParameter("uid");
 			String password=request.getParameter("password");
-			
-			if(service.login(uid, password)==1) {
+			int regid=service.login(uid, password);
+			if(regid!=0) {
 				/*out.println("<html><body><h1><font color='red'>");
 				out.println("Welcome! "+username);
 				out.println("</font></h1></body></html>");*/
 				HttpSession session=request.getSession();
 				session.setAttribute("uid", uid);
+				if(service.checkType(uid)==0) {
 				request.getRequestDispatcher("views/index.jsp")
 				.forward(request,response);
-			}else {
+			}
+				else{
+					request.getRequestDispatcher("views/indexAdmin.jsp")
+					.forward(request,response);
+				}
+			}
+					
+					else {
 				/*response.sendRedirect("http://localhost:9090/WebLoginApplication/login.html");*/
 				out.println("<html><body><h1><font color='red'>");
 				out.println("Invalid Credentials! Re-enter");

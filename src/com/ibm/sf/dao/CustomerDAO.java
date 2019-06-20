@@ -27,6 +27,7 @@ public interface CustomerDAO {
 	public abstract List getCustomerDetails()throws BankException;
 	public abstract Double withdraw(String uid,Double amount)throws BankException;
 	public abstract Double deposit(String uid,Double amount)throws BankException;
+	public abstract Integer checkType(String uid) throws BankException;
 
 	
 }

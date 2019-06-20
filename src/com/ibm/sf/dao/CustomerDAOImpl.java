@@ -37,7 +37,7 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 			preparedStatement.setString(2, password);
 			ResultSet resultSet=preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				return 1;
+				return resultSet.getInt(4);
 			}else {
 				return 0;
 			}
@@ -333,4 +333,48 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public List getCustomerDetails() throws BankException {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
+	@Override
+	public Integer checkType(String uid) throws BankException {
+		
+		Connection connection=null;
+		try {
+			Context context= 
+					(Context)new InitialContext().lookup("java:comp/env");
+			DataSource dataSource= (DataSource) context.lookup("jdbc/userDB");
+			connection=dataSource.getConnection();
+			PreparedStatement preparedStatement=
+					connection.prepareStatement(QueryMapper.VERIFY_USER);
+			preparedStatement.setString(1,uid);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			if(resultSet.getInt(4)==0) {
+				return 0;}
+				else{
+					return 1;//column index of type in master table
+				}
+			
+			
+		}catch(SQLException e) {
+			daoLogger.error(e.getMessage());
+			throw new BankException(e.getMessage());
+		}catch(Exception e) {
+			daoLogger.error(e.getMessage());
+			throw new BankException(e.getMessage());
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {				
+				e.printStackTrace();
+			}
+		}
+	}
+}

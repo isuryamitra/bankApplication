@@ -51,6 +51,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public Double deposit(String uid, Double amount) {
 		return customer.deposit(uid, amount);
 	}
+	
+	public Integer checkType(String uid) {
+		return customer.checkType(uid);
+	}
 }
 
 

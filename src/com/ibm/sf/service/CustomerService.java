@@ -24,5 +24,8 @@ public interface CustomerService {
 	public abstract Integer getCustomerDetails()throws BankException;
 	public abstract Double withdraw(String uid,Double amount) throws BankException;
 	public abstract Double deposit(String uid,Double amount)throws BankException;
+
+
+	public abstract int checkType(String uid);
 	
 }
