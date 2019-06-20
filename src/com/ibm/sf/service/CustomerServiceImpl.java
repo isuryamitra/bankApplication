@@ -1,21 +1,21 @@
 package com.ibm.sf.service;
 import java.time.LocalDate;
-import com.ibm.sf.dao.*;
+
+import com.ibm.sf.dao.CustomerDAO;
+import com.ibm.sf.dao.CustomerDAOImpl;
+import com.ibm.sf.service.exception.BankException;
 public class CustomerServiceImpl implements CustomerService {
 
-	
 	private CustomerDAO customer=new CustomerDAOImpl();
 	@Override
-	public Integer login(String uid, String password) {
+	public Integer login(String uid, String password) throws BankException {
 		return customer.login(uid, password);
 	}
 	@Override
 	public Integer customerReg(String name, Long accountno, String email, LocalDate dob, String fname, Long mobile,
-			String password) {
+			String password) throws BankException {
 		return customer.customerReg(name, accountno, email, dob, fname, mobile, password);
 	}
-
-	
 	@Override
 	public Double getCurrentAmount(String uid) {
 		return customer.getCurrentAmount(uid);
@@ -43,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	
 	@Override
-	public Double withdraw(String uid, Double amount) {
+	public Double withdraw(String uid, Double amount) throws BankException {
 		return customer.withdraw(uid, amount);
 	}
 
