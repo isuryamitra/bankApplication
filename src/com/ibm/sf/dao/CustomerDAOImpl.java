@@ -318,4 +318,19 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	@Override
+	public Integer fundsTransfer(String name, Long accountno, Integer type, String ifsc, Double amount)
+			throws BankException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List getCustomerDetails() throws BankException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	}
