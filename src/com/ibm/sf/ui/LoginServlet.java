@@ -24,19 +24,22 @@ public class LoginServlet extends HttpServlet {
 			String password=request.getParameter("password");
 			System.out.println(uid +" , "+password);
 			int regid=service.login(uid, password);
-			if(regid!=0) {
+			System.out.println(regid);
+			if(regid==1) {
 				/*out.println("<html><body><h1><font color='red'>");
 				out.println("Welcome! "+username);
 				out.println("</font></h1></body></html>");*/
 				HttpSession session=request.getSession();
 				session.setAttribute("uid", uid);
 				if(service.checkType(uid)==0) {
-				request.getRequestDispatcher("index.jsp")
-				.forward(request,response);
+					/*
+					 * request.getRequestDispatcher("index.jsp") .forward(request,response);
+					 */
 			}
 				else{
-					request.getRequestDispatcher("indexAdmin.jsp")
-					.forward(request,response);
+					/*
+					 * request.getRequestDispatcher("indexAdmin.jsp") .forward(request,response);
+					 */
 				}
 				System.out.println(regid);
 			}
@@ -46,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 				out.println("<html><body><h1><font color='red'>");
 				out.println("Invalid Credentials! Re-enter");
 				out.println("</font></h1></body></html>");
-				request.getRequestDispatcher("login.html").include(request, response);
+				//request.getRequestDispatcher("login.js").include(request, response);
 			}
 			System.out.println("hi");
 		}catch(Exception e) {

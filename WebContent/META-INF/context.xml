@@ -4,6 +4,6 @@
     <Resource name="jdbc/userDB" auth="Container"
         type="javax.sql.DataSource" username="scott" password="tiger"
         driverClassName="oracle.jdbc.OracleDriver"
-        url="jdbc:oracle:thin:@//9.199.67.71:1521/orcl.in.ibm.com"
+        url="jdbc:oracle:thin:@//localhost:1521/orcl.in.ibm.com"
         maxActive="10" maxIdle="4" /> 
 </Context>

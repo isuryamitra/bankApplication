@@ -17,7 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return customer.customerReg(name, accountno, email, dob, fname, mobile, password);
 	}
 	@Override
-	public Double getCurrentAmount(String uid) {
+	public Double getCurrentAmount(String uid) throws BankException {
 		return customer.getCurrentAmount(uid);
 	}
 
@@ -27,12 +27,12 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Integer fundsTransfer(String name, Long accountno, Integer type, String ifsc, Double amount) {
+	public Integer fundsTransfer(String name, Long accountno, Integer type, String ifsc, Double amount) throws BankException {
 		return customer.fundsTransfer(name, accountno, type, ifsc, amount);
 	}
 
 	@Override
-	public Integer mobileTopUp(Long mobno, String operator, Double amount) {
+	public Integer mobileTopUp(Long mobno, String operator, Double amount) throws BankException {
 		return customer.mobileTopUp(mobno, operator, amount);
 	}
 	
@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Double deposit(String uid, Double amount) {
+	public Double deposit(String uid, Double amount) throws BankException {
 		return customer.deposit(uid, amount);
 	}
 	

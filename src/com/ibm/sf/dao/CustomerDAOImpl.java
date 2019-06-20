@@ -35,9 +35,17 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 					connection.prepareStatement(QueryMapper.VERIFY_USER);
 			preparedStatement.setString(1,uid);
 			preparedStatement.setString(2, password);
+			System.out.println(preparedStatement.toString()+"prep stmnt");
+			System.out.println("uid and pwd"+uid+" "+password);
 			ResultSet resultSet=preparedStatement.executeQuery();
+//			System.out.println(resultSet.getInt("ROLE")+""+resultSet.getInt("REG_ID"));
+//			System.out.println(resultSet.toString()+" out");
+//			System.out.println("hvbhbvh"+resultSet.next());
 			if(resultSet.next()) {
-				return resultSet.getInt(4);
+				System.out.println(resultSet.getInt(1)+" role and regid"+resultSet.getInt(2));
+				
+				return resultSet.getInt("ROLE");
+				
 			}else {
 				return 0;
 			}
