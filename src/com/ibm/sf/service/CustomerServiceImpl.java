@@ -1,5 +1,7 @@
 package com.ibm.sf.service;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.ibm.sf.dao.CustomerDAO;
 import com.ibm.sf.dao.CustomerDAOImpl;
@@ -8,10 +10,27 @@ public class CustomerServiceImpl implements CustomerService {
 
 	private CustomerDAO customer=new CustomerDAOImpl();
 	@Override
-	public Integer login(String uid, String password) throws BankException {
+	public Boolean login(String uid, String password) throws BankException {
 		return customer.login(uid, password);
 	}
+	/*
+	 * @Override public abstract Integer fundsTransfer(Integer type, Integer amount,
+	 * Integer uid, Date d, String remarks) throws BankException{ return
+	 * customer.fundsTransfer(type, amount, uid, d, remarks); }
+	 */
 	@Override
+	public Integer fundsTransfer(Integer type, Integer amount, Integer uid, Date d, String remarks)
+			throws BankException {
+		// TODO Auto-generated method stub
+		return customer.fundsTransfer(type, amount, uid, d, remarks);
+	}
+	
+	
+	
+	//TO BE UPDATED
+	
+
+@Override
 	public Integer customerReg(String name, Long accountno, String email, LocalDate dob, String fname, Long mobile,
 			String password) throws BankException {
 		return customer.customerReg(name, accountno, email, dob, fname, mobile, password);
@@ -22,14 +41,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public String getStatement(String uid) {
+	public List getStatement(String uid) {
 		return customer.getStatement(uid);
 	}
 
-	@Override
-	public Integer fundsTransfer(String name, Long accountno, Integer type, String ifsc, Double amount) throws BankException {
-		return customer.fundsTransfer(name, accountno, type, ifsc, amount);
-	}
+
 
 	@Override
 	public Integer mobileTopUp(Long mobno, String operator, Double amount) throws BankException {
@@ -37,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public Integer getCustomerDetails() {
+	public List getCustomerDetails() {
 	return customer.getCustomerDetails();
 	}
 
@@ -52,9 +68,4 @@ public class CustomerServiceImpl implements CustomerService {
 		return customer.deposit(uid, amount);
 	}
 	
-	public Integer checkType(String uid) {
-		return customer.checkType(uid);
-	}
 }
-
-

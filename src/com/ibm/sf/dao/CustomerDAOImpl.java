@@ -1,11 +1,9 @@
 package com.ibm.sf.dao;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -24,7 +22,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 	
 private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 	@Override
-	public Integer login(String uid, String password) throws BankException {
+	public Boolean login(String uid, String password) throws BankException {
 		Connection connection=null;
 		try {
 			Context context= 
@@ -42,12 +40,15 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 //			System.out.println(resultSet.toString()+" out");
 //			System.out.println("hvbhbvh"+resultSet.next());
 			if(resultSet.next()) {
-				System.out.println(resultSet.getInt(1)+" role and regid"+resultSet.getInt(2));
+				System.out.println(resultSet.getString(1));
+				System.out.println(resultSet.getString(2));
+				System.out.println(resultSet.getString(3));
+				System.out.println(resultSet.getString(4));
 				
-				return resultSet.getInt("ROLE");
+				return true;
 				
 			}else {
-				return 0;
+				return false;
 			}
 		}catch(SQLException e) {
 			daoLogger.error(e.getMessage());
@@ -64,46 +65,60 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 			}
 		}
 	}
-		
-
+	
 	@Override
-	public Double getCurrentAmount(String uid) throws BankException 
-	{
-		Connection connection=null;
-		Double currentBal;
-		try {
-			Context context= 
-					(Context)new InitialContext().lookup("java:comp/env");
-			DataSource dataSource= (DataSource) context.lookup("jdbc/userDB");
-			connection=dataSource.getConnection();
-			PreparedStatement preparedStatement=
-					connection.prepareStatement(QueryMapper.VERIFY_USER);
-			preparedStatement.setString(1,uid);
-			
-			ResultSet resultSet=preparedStatement.executeQuery();
-			if(resultSet.next()) {
-				return resultSet.getDouble(4);//specify index of avaliable balance field
-				
-			}else {
-				return 0.0;
-			}
-		}catch(SQLException e) {
-			daoLogger.error(e.getMessage());
-			throw new BankException(e.getMessage());
-		}catch(Exception e) {
-			daoLogger.error(e.getMessage());
-			throw new BankException(e.getMessage());
-		}
-		finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {				
-				e.printStackTrace();
-			}
-		}
+	public Integer fundsTransfer(Integer type, Integer amount,Integer uid,Date d,String remarks)
+			throws BankException {
+	
+	Connection connection=null;
+	try {
+		Context context= 
+				(Context)new InitialContext().lookup("java:comp/env");
+		DataSource dataSource= (DataSource) context.lookup("jdbc/userDB");
+		connection=dataSource.getConnection();
+		PreparedStatement preparedStatement= 
+				connection.prepareStatement(QueryMapper.TRANSACT_ADD);
+		/* populatePreparedStatement(user,preparedStatement); */
+		preparedStatement.setInt(1,11);
+		preparedStatement.setInt(2,amount);
+		preparedStatement.setInt(3,type);
+		preparedStatement.setInt(4,uid);
+		preparedStatement.setDate(5,d);
+		preparedStatement.setString(6,remarks);
 		
+		int status=preparedStatement.executeUpdate();
+		if(status>0) {
+			//daoLogger.info("New user: "+.getUserId()+" added to database");
+			return status;
+		}else {
+			throw new BankException("Unable to transfer");
+		}
+	}catch(SQLException e) {
+		/*
+		 * daoLogger.error(e.getMessage()); throw new BankException(e.getMessage());
+		 */
+	}catch(Exception e) {
+		/*
+		 * daoLogger.error(e.getMessage()); throw new BankException(e.getMessage());
+		 */}
+	finally {
+		try {
+			connection.close();
+		} catch (SQLException e) {				
+			e.printStackTrace();
+		}
 	}
-
+	// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	//TO BE UPDATED//
 	
 	@Override
 	public List getStatement(String uid) throws BankException {	//get details from transfer table
@@ -293,16 +308,6 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 		}
 		return currentBal;
 	}
-
-
-
-	@Override
-	public Integer fundsTransfer(String name, Long accountno, Integer type, String ifsc, Double amount)
-			throws BankException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/*
 	 * @Override public List getCustomerDetails() throws BankException { // TODO
 	 * Auto-generated method stub return null; }
@@ -313,42 +318,6 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 	 * Auto-generated method stub return null; }
 	 */
 
-
-	@Override
-	public Integer checkType(String uid) throws BankException {
-		
-		Connection connection=null;
-		try {
-			Context context= 
-					(Context)new InitialContext().lookup("java:comp/env");
-			DataSource dataSource= (DataSource) context.lookup("jdbc/userDB");
-			connection=dataSource.getConnection();
-			PreparedStatement preparedStatement=
-					connection.prepareStatement(QueryMapper.VERIFY_USER);
-			preparedStatement.setString(1,uid);
-			ResultSet resultSet=preparedStatement.executeQuery();
-			if(resultSet.getInt(4)==0) {
-				return 0;}
-				else{
-					return 1;//column index of type in master table
-				}
-			
-			
-		}catch(SQLException e) {
-			daoLogger.error(e.getMessage());
-			throw new BankException(e.getMessage());
-		}catch(Exception e) {
-			daoLogger.error(e.getMessage());
-			throw new BankException(e.getMessage());
-		}
-		finally {
-			try {
-				connection.close();
-			} catch (SQLException e) {				
-				e.printStackTrace();
-			}
-		}
-	}
 
 
 	@Override
@@ -357,3 +326,15 @@ private Logger daoLogger=Logger.getLogger(CustomerDAOImpl.class);
 		return null;
 	}
 }
+	
+	//withdraw from current balance
+	// reg_id
+	
+	
+	//deposit
+	
+	// update trnsfrd user account balance
+	
+	
+}
+		
